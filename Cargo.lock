@@ -857,7 +857,7 @@ dependencies = [
 
 [[package]]
 name = "skeletree"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "clap",
@@ -871,7 +871,7 @@ dependencies = [
 
 [[package]]
 name = "skeletree-bench"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "skeletree-engine",
  "skeletree-mcp",
@@ -879,14 +879,14 @@ dependencies = [
 
 [[package]]
 name = "skeletree-core"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "thiserror 1.0.69",
 ]
 
 [[package]]
 name = "skeletree-engine"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "ignore",
  "rayon",
@@ -898,7 +898,7 @@ dependencies = [
 
 [[package]]
 name = "skeletree-lang"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "skeletree-core",
  "thiserror 1.0.69",
@@ -911,7 +911,7 @@ dependencies = [
 
 [[package]]
 name = "skeletree-mcp"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "rmcp",
@@ -924,7 +924,7 @@ dependencies = [
 
 [[package]]
 name = "skeletree-store"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "blake3",
  "rusqlite",
