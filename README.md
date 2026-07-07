@@ -1,4 +1,14 @@
-# Skeletree
+<p align="center">
+  <img src="https://raw.githubusercontent.com/hemia-labs/skeletree/main/assets/logo.webp" alt="Skeletree" width="480">
+</p>
+
+<p align="center">
+  <a href="https://crates.io/crates/skeletree"><img src="https://img.shields.io/crates/v/skeletree.svg" alt="crates.io"></a>
+  <a href="https://github.com/hemia-labs/skeletree/actions/workflows/ci.yml"><img src="https://github.com/hemia-labs/skeletree/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/crates/l/skeletree.svg" alt="license"></a>
+  <img src="https://img.shields.io/badge/rust-stable-orange.svg" alt="rust">
+  <a href="https://hemia.dev"><img src="https://img.shields.io/badge/build%20by-hemia-000000.svg?labelColor=000000" alt="build by hemia"></a>
+</p>
 
 > Your agent stops reading your codebase and starts querying it.
 
@@ -116,15 +126,15 @@ accepting a `token_budget` (default 1500):
 | `find` | `query`, `kind?`, `token_budget` | Symbols matching a name substring, optionally filtered by kind. |
 | `neighbors` | `symbol`, `depth` (1–3), `token_budget` | Symbols that call, use, or are used by the named symbol. |
 
-## Usage (from crates.io)
+## Usage
 
-Once published:
+Install the binary (once published):
 
 ```sh
-cargo install skeletree      # installs the `skeletree` binary
+cargo install skeletree
 ```
 
-Index your repo, then wire the MCP server into your agent:
+Index your repo — this writes `.skeletree/index.db`:
 
 ```sh
 cd your-repo
@@ -132,13 +142,35 @@ skeletree index .
 skeletree stats --limit 10       # sanity-check the ranking
 ```
 
-Register the MCP server with your client. For Claude Code:
+Then wire `skeletree serve` into your agent as an MCP server. Run it from the
+repo root — it reads `.skeletree/index.db` relative to the current directory.
+
+### Claude Code
 
 ```sh
+cd your-repo
 claude mcp add skeletree -- skeletree serve
 ```
 
-Or add it to any MCP client's config manually:
+That writes the server into `.mcp.json` (project scope). Add `-s user` to make
+it available in every project instead. Verify with `claude mcp list`.
+
+### Codex
+
+Codex reads MCP servers from `~/.codex/config.toml`. Add:
+
+```toml
+[mcp_servers.skeletree]
+command = "skeletree"
+args = ["serve"]
+```
+
+Because `serve` resolves the index from the current directory, launch Codex
+from the repo root you indexed.
+
+### Any other MCP client
+
+Point it at the `skeletree` binary with the `serve` argument:
 
 ```json
 {
@@ -150,9 +182,6 @@ Or add it to any MCP client's config manually:
   }
 }
 ```
-
-Run `serve` from the repo root — it reads `.skeletree/index.db` relative to the
-current directory.
 
 ## Development
 

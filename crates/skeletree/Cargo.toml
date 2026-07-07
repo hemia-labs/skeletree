@@ -6,6 +6,9 @@ edition.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
+# Root README is the crate's README on crates.io (cargo defaults to the
+# crate dir, so point it at the workspace root explicitly).
+readme = "../../README.md"
 
 # Binary is `skeletree` by default (package name + src/main.rs).
 
