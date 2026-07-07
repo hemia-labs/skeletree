@@ -29,6 +29,11 @@ enum Command {
     },
     /// Run the MCP server over stdio.
     Serve {
+        /// Repo root whose index to serve. Defaults to the current directory —
+        /// pass an absolute path when the launcher (e.g. Claude Desktop) can't
+        /// set the working directory to your repo.
+        #[arg(default_value = ".")]
+        path: PathBuf,
         /// Reindex changed files in the background as they change.
         #[arg(long)]
         watch: bool,
@@ -105,10 +110,10 @@ fn main() -> Result<()> {
             );
             Ok(())
         }
-        Command::Serve { watch: _ } => {
+        Command::Serve { path, watch: _ } => {
             // ponytail: --watch (background reindex) lands with the watcher step;
             // for now serve reads the existing index.
-            let db = engine::default_db_path(&std::env::current_dir()?);
+            let db = engine::default_db_path(&path);
             let store = open_existing(&db)?;
             skeletree_mcp::serve_blocking(store)?;
             Ok(())

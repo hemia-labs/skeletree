@@ -134,6 +134,13 @@ Install the binary (once published):
 cargo install skeletree
 ```
 
+Update to the latest release the same way — `--force` reinstalls over the
+existing binary:
+
+```sh
+cargo install skeletree --force
+```
+
 Index your repo — this writes `.skeletree/index.db`:
 
 ```sh
@@ -155,6 +162,30 @@ claude mcp add skeletree -- skeletree serve
 That writes the server into `.mcp.json` (project scope). Add `-s user` to make
 it available in every project instead. Verify with `claude mcp list`.
 
+### Claude Desktop
+
+Claude Desktop doesn't launch the server from your repo, so `claude mcp add`
+and a bare `serve` won't find the index. Edit the config file directly and pass
+the **absolute path** to the indexed repo as an argument to `serve`:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "skeletree": {
+      "command": "skeletree",
+      "args": ["serve", "/absolute/path/to/your-repo"]
+    }
+  }
+}
+```
+
+If `skeletree` isn't on the launcher's `PATH`, use its absolute path as
+`command` too (`which skeletree` to find it). Restart Claude Desktop after
+editing.
+
 ### Codex
 
 Codex reads MCP servers from `~/.codex/config.toml`. Add:
@@ -162,11 +193,11 @@ Codex reads MCP servers from `~/.codex/config.toml`. Add:
 ```toml
 [mcp_servers.skeletree]
 command = "skeletree"
-args = ["serve"]
+args = ["serve", "/absolute/path/to/your-repo"]
 ```
 
-Because `serve` resolves the index from the current directory, launch Codex
-from the repo root you indexed.
+The path argument is optional — omit it to serve the current directory — but
+passing the absolute repo path avoids depending on where Codex is launched.
 
 ### Any other MCP client
 

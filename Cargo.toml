@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/*"]
 
 [workspace.package]
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/hemia-labs/skeletree"
@@ -11,12 +11,13 @@ authors = ["Cristian Mendez"]
 
 [workspace.dependencies]
 # Internal crates (path deps, wire the DAG). `version` is required for
-# `cargo publish` — path-only deps can't be packaged.
-skeletree-core   = { path = "crates/skeletree-core", version = "0.1.0" }
-skeletree-lang   = { path = "crates/skeletree-lang", version = "0.1.0" }
-skeletree-store  = { path = "crates/skeletree-store", version = "0.1.0" }
-skeletree-engine = { path = "crates/skeletree-engine", version = "0.1.0" }
-skeletree-mcp    = { path = "crates/skeletree-mcp", version = "0.1.0" }
+# `cargo publish` — path-only deps can't be packaged. Keep these equal to
+# [workspace.package].version above; bump both together each release.
+skeletree-core   = { path = "crates/skeletree-core", version = "0.1.1" }
+skeletree-lang   = { path = "crates/skeletree-lang", version = "0.1.1" }
+skeletree-store  = { path = "crates/skeletree-store", version = "0.1.1" }
+skeletree-engine = { path = "crates/skeletree-engine", version = "0.1.1" }
+skeletree-mcp    = { path = "crates/skeletree-mcp", version = "0.1.1" }
 
 # External — single source of truth for versions. Heavy deps stay declared here
 # and get wired into their crate on the step that needs them (see roadmap).
