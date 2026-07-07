@@ -1,0 +1,14 @@
+[package]
+name = "skeletree-store"
+description = "SQLite persistence: schema, migrations, and recursive graph queries."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+skeletree-core.workspace = true
+rusqlite.workspace = true
+blake3.workspace = true
+thiserror.workspace = true

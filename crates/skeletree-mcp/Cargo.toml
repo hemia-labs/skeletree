@@ -1,0 +1,17 @@
+[package]
+name = "skeletree-mcp"
+description = "MCP server and the token-budgeted tools agents query (overview, find, neighbors, impact, snippet)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+skeletree-core.workspace = true
+skeletree-store.workspace = true
+skeletree-engine.workspace = true
+rmcp = { workspace = true, features = ["server", "macros", "transport-io"] }
+tokio.workspace = true
+serde.workspace = true
+anyhow.workspace = true

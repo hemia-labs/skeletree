@@ -1,0 +1,20 @@
+[package]
+name = "skeletree"
+description = "Queryable symbol graph of your repo for AI agents (index + MCP server)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+# Binary is `skeletree` by default (package name + src/main.rs).
+
+[dependencies]
+skeletree-core.workspace = true
+skeletree-engine.workspace = true
+skeletree-mcp.workspace = true
+skeletree-store.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

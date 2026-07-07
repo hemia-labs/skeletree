@@ -1,0 +1,22 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+
+# pnpm / node
+node_modules/
+.pnpm-store/
+dist/
+*.log
+
+# docs
+/docs/
+
+# skeletree artifacts
+.skeletree/
+*.db
+
+# env / editor
+.env
+.env.*
+.DS_Store

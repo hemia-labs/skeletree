@@ -1,0 +1,9 @@
+# cargo-deny: catch license issues and duplicate deps early.
+[licenses]
+allow = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC", "Unicode-DFS-2016", "Zlib"]
+
+[bans]
+multiple-versions = "warn"
+
+[advisories]
+yanked = "deny"

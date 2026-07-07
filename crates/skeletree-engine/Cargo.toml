@@ -1,0 +1,17 @@
+[package]
+name = "skeletree-engine"
+description = "Orchestration: repo walk, index pipeline, PageRank, incremental, watcher."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+skeletree-core.workspace = true
+skeletree-lang.workspace = true
+skeletree-store.workspace = true
+ignore.workspace = true
+rayon.workspace = true
+thiserror.workspace = true
+# petgraph + notify + tiktoken-rs wired in the rank/watcher steps.

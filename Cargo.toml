@@ -1,0 +1,44 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/hemia-labs/skeletree"
+authors = ["Cristian Mendez"]
+
+[workspace.dependencies]
+# Internal crates (path deps, wire the DAG). `version` is required for
+# `cargo publish` — path-only deps can't be packaged.
+skeletree-core   = { path = "crates/skeletree-core", version = "0.1.0" }
+skeletree-lang   = { path = "crates/skeletree-lang", version = "0.1.0" }
+skeletree-store  = { path = "crates/skeletree-store", version = "0.1.0" }
+skeletree-engine = { path = "crates/skeletree-engine", version = "0.1.0" }
+skeletree-mcp    = { path = "crates/skeletree-mcp", version = "0.1.0" }
+
+# External — single source of truth for versions. Heavy deps stay declared here
+# and get wired into their crate on the step that needs them (see roadmap).
+tree-sitter = "0.22"
+rusqlite    = { version = "0.31", features = ["bundled", "blob"] }
+petgraph    = "0.6"
+rmcp        = "2"
+notify      = "6"
+ignore      = "0.4"
+rayon       = "1"
+blake3      = "1"
+tiktoken-rs = "0.5"
+
+# Shared cross-cutting deps
+clap      = { version = "4", features = ["derive"] }
+tokio     = { version = "1", features = ["rt-multi-thread", "macros", "io-std"] }
+anyhow    = "1"
+thiserror = "1"
+tracing   = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde     = { version = "1", features = ["derive"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

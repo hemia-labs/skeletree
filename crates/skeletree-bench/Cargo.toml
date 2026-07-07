@@ -1,0 +1,13 @@
+[package]
+name = "skeletree-bench"
+description = "Reproducible token/tool-call benchmark harness (agent with vs. without Skeletree)."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+skeletree-engine.workspace = true
+skeletree-mcp.workspace = true

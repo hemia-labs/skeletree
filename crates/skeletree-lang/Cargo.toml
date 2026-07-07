@@ -1,0 +1,17 @@
+[package]
+name = "skeletree-lang"
+description = "Language parsing: tree-sitter grammars and the Language trait/registry."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+skeletree-core.workspace = true
+tree-sitter.workspace = true
+tree-sitter-python = "0.21"
+tree-sitter-typescript = "0.21"
+tree-sitter-javascript = "0.21"
+tree-sitter-rust = "0.21"
+thiserror.workspace = true
