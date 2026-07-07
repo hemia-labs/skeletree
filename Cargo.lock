@@ -861,6 +861,8 @@ version = "0.1.2"
 dependencies = [
  "anyhow",
  "clap",
+ "serde",
+ "serde_json",
  "skeletree-core",
  "skeletree-engine",
  "skeletree-mcp",

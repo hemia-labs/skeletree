@@ -108,12 +108,12 @@ Adding a language is a self-contained change behind the `Language` trait — see
 | `skeletree index [PATH]` | Index a repo into `.skeletree/index.db` (default `.`). |
 | `skeletree serve [--watch]` | Run the MCP server over stdio against the current repo's index. |
 | `skeletree stats [PATH] [--limit N]` | Print the top-N symbols by rank. |
-| `skeletree export [--format md\|json\|mermaid] [--budget N]` | Export a ranked map. |
+| `skeletree export [PATH] [--format md\|json\|mermaid] [--budget N]` | Export a ranked map. |
 | `skeletree init` | One-command setup: index + MCP config + git hook. |
 
-`serve` reads the existing index; `stats` and `serve` fail with a clear message
-if you haven't indexed yet. `export`, `init`, and `serve --watch` are on the
-roadmap and currently stubs.
+`serve`, `stats`, and `export` read the existing index; they fail with a clear
+message if you haven't indexed yet. `init` and `serve --watch` are still on
+the roadmap and currently stubs.
 
 ## MCP tools
 
@@ -125,6 +125,31 @@ accepting a `token_budget` (default 1500):
 | `overview` | `token_budget` | Ranked map of the repo, most central symbols first. |
 | `find` | `query`, `kind?`, `token_budget` | Symbols matching a name substring, optionally filtered by kind. |
 | `neighbors` | `symbol`, `depth` (1–3), `token_budget` | Symbols that call, use, or are used by the named symbol. |
+
+Once the server is registered (see setup below), just ask your agent in plain
+language — e.g. "give me an overview of this repo" or "find the `Registry`
+symbol and show its neighbors" — the agent picks the right tool and args on
+its own; no special syntax needed. Example, asking for `Registry`'s neighbors
+in this repo:
+
+```
+> find the Registry symbol and show its neighbors
+
+struct    Registry  (crates/skeletree-lang/src/lib.rs:220)
+fn        with_defaults  crates/skeletree-lang/src/lib.rs:226  pub fn with_defaults() -> Self
+fn        for_path       crates/skeletree-lang/src/lib.rs:238  pub fn for_path(&self, path: &Path) -> Option<&Arc<dyn Language>>
+```
+
+One line per symbol: `kind  name  file:line  signature`, ranked, trimmed to
+the token budget — that's all three tools return.
+
+`skeletree serve` is a **local, stdio-based** MCP server, so it works in any
+client that can spawn a local process: Claude Code (all permission modes —
+default, auto-accept, plan, bypass — MCP tools aren't affected by the mode),
+Claude Desktop, Codex, and any other MCP-compatible agent (setup differs
+slightly per client — see below). It does **not** work in Claude.ai (web) or
+the Claude mobile app, since those only support remote MCP servers, not local
+stdio ones.
 
 ## Usage
 
@@ -166,7 +191,8 @@ it available in every project instead. Verify with `claude mcp list`.
 
 Claude Desktop doesn't launch the server from your repo, so `claude mcp add`
 and a bare `serve` won't find the index. Edit the config file directly and pass
-the **absolute path** to the indexed repo as an argument to `serve`:
+the **absolute path** to the indexed repo as an argument to `serve`. You can
+open it faster from the app: **Settings → Developer → Edit Config**.
 
 - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
